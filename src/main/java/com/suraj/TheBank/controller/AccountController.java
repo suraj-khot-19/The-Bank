@@ -1,6 +1,6 @@
 package com.suraj.TheBank.controller;
 
-import com.suraj.TheBank.model.Account;
+import com.suraj.TheBank.dto.AccountDto;
 import com.suraj.TheBank.service.AccountService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +21,7 @@ public class AccountController {
     }
 
     @PostMapping("/new")
-    public ResponseEntity<Account> addNewAcc(@RequestBody Account acc) {
-        return new ResponseEntity<>(service.addNewAcc(acc), HttpStatus.OK);
+    public ResponseEntity<AccountDto> addNewAcc(@RequestBody AccountDto dto) {
+        return new ResponseEntity<>(service.addNewAcc(dto), HttpStatus.CREATED);
     }
 }

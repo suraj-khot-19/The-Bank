@@ -1,7 +1,7 @@
 package com.suraj.TheBank.service;
 
-import com.suraj.TheBank.model.Account;
+import com.suraj.TheBank.dto.AccountDto;
 
 public interface AccountService {
-    Account addNewAcc(Account acc);
+    AccountDto addNewAcc(AccountDto dto);
 }

@@ -16,8 +16,10 @@ public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     /// ALTER TABLE account AUTO_INCREMENT = 100000000001;  (for initial value then increment)
-    private Long accountNumber;
+    private long accountNumber;
 
-    private String accountHolderName;
-    private long amount;
+    private double balance;
+    private String name;
+    private String email;
+    private long phone;
 }
