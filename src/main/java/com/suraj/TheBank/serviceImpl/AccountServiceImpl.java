@@ -25,4 +25,16 @@ public class AccountServiceImpl implements AccountService {
         Account save = repo.save(acc);            // saving entity
         return mapper.entityToDto(save);        // sending dto
     }
+
+    @Override
+    public boolean depositMoney(long accountNumber, double amount) {
+        Account acc = repo.findById(accountNumber).orElse(null);
+        if (acc != null) {
+            acc.setBalance(acc.getBalance() + amount);
+            repo.save(acc);
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
