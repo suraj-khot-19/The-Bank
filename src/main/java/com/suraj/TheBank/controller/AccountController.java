@@ -40,14 +40,15 @@ public class AccountController {
 
     /// deposit money into account
     @PutMapping("/deposit/{accountNumber}")
-    public ResponseEntity<String> deposit(@PathVariable(name = "accountNumber") long accountNumber, @RequestBody Map<String, Double> data) {
+    public ResponseEntity<?> deposit(@PathVariable(name = "accountNumber") long accountNumber, @RequestBody Map<String, Double> data) {
         /// @RequestBody double amount (we cannot do directly that)
 
-        boolean isDeposited = service.depositMoney(accountNumber, data.get("amount"));
+        Map<String, Double> map = service.depositMoney(accountNumber, data.get("amount"));
 
-        if (isDeposited)
-            return ResponseEntity.status(HttpStatus.OK).body("Amount Deposited successfully!");
-        else
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Your account is not associated with our bank");
+        if (!map.isEmpty())
+            return ResponseEntity.ok(map);
+        else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", "Your account is not associated with our bank"));
+        }
     }
 }

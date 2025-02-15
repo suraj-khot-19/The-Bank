@@ -7,6 +7,9 @@ import com.suraj.TheBank.repository.AccountRepository;
 import com.suraj.TheBank.service.AccountService;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Service
 public class AccountServiceImpl implements AccountService {
 
@@ -35,14 +38,22 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public boolean depositMoney(long accountNumber, double amount) {
+    public Map<String, Double> depositMoney(long accountNumber, double amount) {
         Account acc = repo.findById(accountNumber).orElse(null);
+
+        Map<String, Double> map = new HashMap<>();
+
         if (acc != null) {
-            acc.setBalance(acc.getBalance() + amount);
+            double prev = acc.getBalance();
+            acc.setBalance(prev + amount);
             repo.save(acc);
-            return true;
+
+            map.put("Initial Balance", prev);
+            map.put("Amount Deposited", amount);
+            map.put("Current Balance", acc.getBalance());
+            return map;
         } else {
-            return false;
+            return map;
         }
     }
 
