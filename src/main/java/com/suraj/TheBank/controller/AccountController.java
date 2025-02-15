@@ -19,11 +19,26 @@ public class AccountController {
         this.service = service;
     }
 
+    /// create new account
     @PostMapping("/new")
     public ResponseEntity<AccountDto> addNewAcc(@RequestBody AccountDto dto) {
         return new ResponseEntity<>(service.addNewAcc(dto), HttpStatus.CREATED);
     }
 
+    /// find account with account number
+    @GetMapping("/find/{accountNumber}")
+    public ResponseEntity<?> findMyAccount(@PathVariable(name = "accountNumber") long accountNumber) {
+        AccountDto acc = service.findMyAccount(accountNumber);
+        if (acc != null) {
+            return ResponseEntity.ok(acc);
+        } else {
+            Map<String, String> map = Map.of("message", "Account not found with number" + accountNumber);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(map);
+        }
+    }
+
+
+    /// deposit money into account
     @PutMapping("/deposit/{accountNumber}")
     public ResponseEntity<String> deposit(@PathVariable(name = "accountNumber") long accountNumber, @RequestBody Map<String, Double> data) {
         /// @RequestBody double amount (we cannot do directly that)

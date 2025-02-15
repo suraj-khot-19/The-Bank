@@ -11,20 +11,19 @@ public class AccountMapper {
     public AccountDto entityToDto(Account acc) {
         return new AccountDto(acc.getAccountNumber(),
                 acc.getBalance(),
-                acc.getName()
+                acc.getName(),
+                acc.getEmail(),
+                acc.getPhone()
         );
-        /// not sending email and phone number as they are not in constructor
     }
 
     /// dto to entity
     public Account dtoToEntity(AccountDto dto) {
-        Account account = new Account();
-        account.setAccountNumber(dto.getAccountNumber());
-        account.setBalance(dto.getBalance());
-        account.setName(dto.getName());
-        account.setEmail(dto.getEmail());
-        account.setPhone(dto.getPhone());
-
-        return account;
+        return new Account(dto.getAccountNumber(),
+                dto.getBalance(),
+                dto.getName(),
+                dto.getEmail(),
+                dto.getPhone()
+        );
     }
 }

@@ -27,6 +27,14 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    public AccountDto findMyAccount(long accountNumber) {
+        Account acc = repo.findById(accountNumber).orElse(null);
+        if (acc != null)
+            return mapper.entityToDto(acc);
+        else return null;
+    }
+
+    @Override
     public boolean depositMoney(long accountNumber, double amount) {
         Account acc = repo.findById(accountNumber).orElse(null);
         if (acc != null) {
@@ -37,4 +45,5 @@ public class AccountServiceImpl implements AccountService {
             return false;
         }
     }
+
 }

@@ -8,19 +8,12 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class AccountDto {
     private long accountNumber;
-
     private double balance;
     private String name;
     private String email;
     private long phone;
-
-    /// not added email and phone
-    public AccountDto(long accountNumber, double balance, String name) {
-        this.accountNumber = accountNumber;
-        this.balance = balance;
-        this.name = name;
-    }
 }
 
