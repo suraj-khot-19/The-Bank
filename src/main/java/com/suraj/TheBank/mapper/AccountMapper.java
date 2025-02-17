@@ -19,11 +19,24 @@ public class AccountMapper {
 
     /// dto to entity
     public Account dtoToEntity(AccountDto dto) {
-        return new Account(dto.getAccountNumber(),
-                dto.getBalance(),
-                dto.getName(),
-                dto.getEmail(),
-                dto.getPhone()
+        /*
+        simple java impl
+
+            return new Account(dto.getAccountNumber(),
+                    dto.getBalance(),
+                    dto.getName(),
+                    dto.getEmail(),
+                    dto.getPhone()
+            );
+        */
+
+        /// using record class from java17+
+        return new Account(
+                dto.accountNumber(),
+                dto.balance(),
+                dto.name(),
+                dto.email(),
+                dto.phone()
         );
     }
 }
