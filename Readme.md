@@ -80,7 +80,6 @@ ___
 11. **Delete an account with no reacord**  
     ![Img](Output/p11.png)
 
-___
 ---
 
 ## End 
@@ -88,7 +87,5 @@ ___
 **Author:** Suraj Khot  
 **Tech Stack:** Spring Boot, MySQL, Java, REST API
 
-___
 ---
-
 ___
