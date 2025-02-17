@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/v1/thebank")
@@ -51,4 +52,16 @@ public class AccountController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", "Your account is not associated with our bank"));
         }
     }
+
+    /// withdraw a money
+    @PutMapping("/withdraw/{accountNumber}")
+    public ResponseEntity<?> withdraw(@PathVariable(name = "accountNumber") long accountNumber, @RequestBody Map<String, Double> data) {
+        Map<String, Object> map = service.withdrawMoney(accountNumber, data.get("amount"));
+
+        if (map.containsKey("error"))
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(map);
+        else
+            return ResponseEntity.ok(map);
+    }
+
 }

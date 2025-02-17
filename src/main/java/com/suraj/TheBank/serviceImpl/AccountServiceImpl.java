@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 @Service
 public class AccountServiceImpl implements AccountService {
@@ -55,6 +56,32 @@ public class AccountServiceImpl implements AccountService {
         } else {
             return map;
         }
+    }
+
+    @Override
+    public Map<String, Object> withdrawMoney(long accountNumber, Double amount) {
+        Account account = repo.findById(accountNumber).orElse(null);
+        Map<String, Object> map = new HashMap<>();
+
+        if (account != null) {
+            double prev = account.getBalance();
+            double total = prev - amount;
+
+            /// minimum 500 baleen should be there
+            if (prev-500 >= amount) {
+                account.setBalance(total);
+                repo.save(account);
+
+                map.put("Message", "Dear " + account.getName() + " Rs " + amount + " debited from your account. Available balance RS " + total);
+            } else {
+                map.put("Message", "Dear " + account.getName() + " Available balance RS " + prev + ", Max Withdrawal RS " + (prev - 500));
+            }
+            return map;
+        } else {
+            map.put("error", "Your account is not associated with our bank");
+            return map;
+        }
+
     }
 
 }
