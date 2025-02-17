@@ -17,4 +17,6 @@ public interface AccountService {
     Map<String, Object> withdrawMoney(long accountNumber, Double amount);
 
     List<AccountDto> getAllAccounts();
+
+    boolean deleteAccount(long accountNumber);
 }

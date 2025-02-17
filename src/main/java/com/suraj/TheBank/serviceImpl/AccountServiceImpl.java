@@ -51,7 +51,7 @@ public class AccountServiceImpl implements AccountService {
 
             map.put("Message", "Dear " + account.getName() + " Rs " + amount + " credited to your account. Available balance RS " + total);
         } else {
-            map.put("error","Your account is not associated with our bank");
+            map.put("error", "Your account is not associated with our bank");
         }
         return map;
     }
@@ -87,6 +87,17 @@ public class AccountServiceImpl implements AccountService {
         List<Account> accounts = repo.findAll();
 
         return accounts.stream().map(mapper::entityToDto).toList();
+    }
+
+    @Override
+    public boolean deleteAccount(long accountNumber) {
+        Account account = repo.findById(accountNumber).orElse(null);
+        if (account != null) {
+            repo.deleteById(accountNumber);
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }
