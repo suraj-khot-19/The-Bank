@@ -7,9 +7,8 @@ import com.suraj.TheBank.repository.AccountRepository;
 import com.suraj.TheBank.service.AccountService;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class AccountServiceImpl implements AccountService {
@@ -81,6 +80,13 @@ public class AccountServiceImpl implements AccountService {
             return map;
         }
 
+    }
+
+    @Override
+    public List<AccountDto> getAllAccounts() {
+        List<Account> accounts = repo.findAll();
+
+        return accounts.stream().map(mapper::entityToDto).toList();
     }
 
 }
