@@ -44,13 +44,12 @@ public class AccountController {
     public ResponseEntity<?> deposit(@PathVariable(name = "accountNumber") long accountNumber, @RequestBody Map<String, Double> data) {
         /// @RequestBody double amount (we cannot do directly that)
 
-        Map<String, Double> map = service.depositMoney(accountNumber, data.get("amount"));
+        Map<String, Object> map = service.depositMoney(accountNumber, data.get("amount"));
 
-        if (!map.isEmpty())
+        if (map.containsKey("error"))
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(map);
+        else
             return ResponseEntity.ok(map);
-        else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", "Your account is not associated with our bank"));
-        }
     }
 
     /// withdraw a money

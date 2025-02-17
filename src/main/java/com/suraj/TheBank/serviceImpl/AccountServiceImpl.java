@@ -39,23 +39,22 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Map<String, Double> depositMoney(long accountNumber, double amount) {
-        Account acc = repo.findById(accountNumber).orElse(null);
+    public Map<String, Object> depositMoney(long accountNumber, double amount) {
+        Account account = repo.findById(accountNumber).orElse(null);
 
-        Map<String, Double> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
 
-        if (acc != null) {
-            double prev = acc.getBalance();
-            acc.setBalance(prev + amount);
-            repo.save(acc);
+        if (account != null) {
+            double prev = account.getBalance();
+            double total = prev + amount;
+            account.setBalance(total);
+            repo.save(account);
 
-            map.put("Initial Balance", prev);
-            map.put("Amount Deposited", amount);
-            map.put("Current Balance", acc.getBalance());
-            return map;
+            map.put("Message", "Dear " + account.getName() + " Rs " + amount + " credited to your account. Available balance RS " + total);
         } else {
-            return map;
+            map.put("error","Your account is not associated with our bank");
         }
+        return map;
     }
 
     @Override
@@ -68,7 +67,7 @@ public class AccountServiceImpl implements AccountService {
             double total = prev - amount;
 
             /// minimum 500 baleen should be there
-            if (prev-500 >= amount) {
+            if (prev - 500 >= amount) {
                 account.setBalance(total);
                 repo.save(account);
 

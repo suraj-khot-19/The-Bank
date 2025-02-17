@@ -11,7 +11,7 @@ public interface AccountService {
 
     AccountDto findMyAccount(long accountNumber);
 
-    Map<String, Double> depositMoney(long accountNumber, double amount);
+    Map<String, Object> depositMoney(long accountNumber, double amount);
 
     Map<String, Object> withdrawMoney(long accountNumber, Double amount);
 }
