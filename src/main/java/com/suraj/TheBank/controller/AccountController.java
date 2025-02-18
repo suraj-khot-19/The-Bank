@@ -28,16 +28,12 @@ public class AccountController {
         return new ResponseEntity<>(service.addNewAcc(dto), HttpStatus.CREATED);
     }
 
+
     /// find account with account number
     @GetMapping("/find/{accountNumber}")
-    public ResponseEntity<?> findMyAccount(@PathVariable(name = "accountNumber") long accountNumber) {
+    public ResponseEntity<AccountDto> findMyAccount(@PathVariable(name = "accountNumber") long accountNumber) {
         AccountDto acc = service.findMyAccount(accountNumber);
-        if (acc != null) {
-            return ResponseEntity.ok(acc);
-        } else {
-            Map<String, String> map = Map.of("message", "Account not found with number" + accountNumber);
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(map);
-        }
+        return ResponseEntity.ok(acc);
     }
 
 
