@@ -37,4 +37,17 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(exception, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    /// minimum required balance in account
+    @ExceptionHandler(MinBalanceException.class)
+    public ResponseEntity<ErrorDetails> handelMinBalanceException(MinBalanceException minBalanceException, WebRequest webRequest) {
+        ErrorDetails errorDetails = new ErrorDetails(
+                LocalDateTime.now(),
+                minBalanceException.getMessage(),
+                "MIN_BALANCE_ERROR",
+                webRequest.getDescription(false)
+        );
+
+        return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
+    }
 }

@@ -6,10 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/v1/thebank")
@@ -40,25 +38,15 @@ public class AccountController {
     /// deposit money into account
     @PutMapping("/deposit/{accountNumber}")
     public ResponseEntity<?> deposit(@PathVariable(name = "accountNumber") long accountNumber, @RequestBody Map<String, Double> data) {
-        /// @RequestBody double amount (we cannot do directly that)
+        /// @RequestBody double amount (we cannot do directly read that)
 
-        Map<String, Object> map = service.depositMoney(accountNumber, data.get("amount"));
-
-        if (map.containsKey("error"))
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(map);
-        else
-            return ResponseEntity.ok(map);
+        return ResponseEntity.ok(service.depositMoney(accountNumber, data.get("amount")));
     }
 
     /// withdraw a money
     @PutMapping("/withdraw/{accountNumber}")
     public ResponseEntity<?> withdraw(@PathVariable(name = "accountNumber") long accountNumber, @RequestBody Map<String, Double> data) {
-        Map<String, Object> map = service.withdrawMoney(accountNumber, data.get("amount"));
-
-        if (map.containsKey("error"))
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(map);
-        else
-            return ResponseEntity.ok(map);
+        return ResponseEntity.ok(service.withdrawMoney(accountNumber, data.get("amount")));
     }
 
     /// get all accounts
@@ -69,12 +57,7 @@ public class AccountController {
 
     /// delete account
     @DeleteMapping("/delete/{accountNumber}")
-    public ResponseEntity<Map<String, String>> deleteAccount(@PathVariable(name = "accountNumber") long accountNumber) {
-        boolean isDeleted = service.deleteAccount(accountNumber);
-        if (isDeleted) {
-            return ResponseEntity.ok(Map.of("Message", "Account deleted with Number " + accountNumber));
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("Error", "No Account found with Number " + accountNumber));
-        }
+    public ResponseEntity<Map<String, String> > deleteAccount(@PathVariable(name = "accountNumber") long accountNumber) {
+        return ResponseEntity.ok(service.deleteAccount(accountNumber));
     }
 }
